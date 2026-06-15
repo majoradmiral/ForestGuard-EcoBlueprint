@@ -1,0 +1,65 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --green-900: #0a1f0a; --green-800: #0d2b0d; --green-700: #114011;
+  --green-600: #166616; --green-500: #228b22; --green-400: #3cb043;
+  --green-300: #6bcf6b; --green-200: #a3e4a3; --green-100: #d5f5d5;
+
+  --red-900: #1a0505; --red-800: #2d0a0a; --red-700: #4a1010;
+  --red-600: #7a1a1a; --red-500: #a83232; --red-400: #d14a4a;
+  --red-300: #e87474;
+
+  --amber-700: #4a3010; --amber-500: #b8860b; --amber-300: #e8b84a;
+  --blue-700: #10304a; --blue-500: #2a6b8a; --blue-300: #6bc8e8;
+  --teal-700: #103a3a; --teal-500: #1a7a6a; --teal-300: #6ad4c0;
+
+  --gray-900: #0d1117; --gray-800: #161b22; --gray-700: #21262d;
+  --gray-600: #30363d; --gray-500: #484f58; --gray-400: #6e7681;
+  --gray-300: #8b949e; --gray-200: #c9d1d9; --gray-100: #e6edf3;
+
+  --bg: var(--gray-900);
+  --card-bg: var(--gray-800);
+  --border: var(--gray-600);
+  --text: var(--gray-200);
+  --text-muted: var(--gray-400);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a { color: var(--green-400); text-decoration: none; }
+a:hover { color: var(--green-300); }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--gray-800); }
+::-webkit-scrollbar-thumb { background: var(--gray-500); border-radius: 3px; }
+
+.mode-btn {
+  padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 600;
+  cursor: pointer; border: 1px solid var(--border);
+  background: var(--card-bg); color: var(--text);
+  transition: all 0.2s;
+}
+.mode-btn:hover { border-color: var(--green-500); color: var(--green-300); }
+.mode-btn.active { border-color: var(--green-400); color: var(--green-200); background: var(--green-900); }
+
+.cause-badge {
+  padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;
+}
+.cause-badge.legal { background: #1a3a1a; color: #6bcf6b; }
+.cause-badge.illegal { background: #3a1a1a; color: #e87474; }
+.cause-badge.disease { background: #3a2a1a; color: #e8b84a; }
+.cause-badge.fire { background: #3a1a0a; color: #e88a4a; }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.pulse { animation: pulse-dot 2s ease-in-out infinite; }
