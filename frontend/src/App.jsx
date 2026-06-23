@@ -5,6 +5,7 @@ import MapView from './pages/MapView'
 import Education from './pages/Education'
 import Hotspots from './pages/Hotspots'
 import Reports from './pages/Reports'
+import Knowledge from './pages/Knowledge'
 import AlertPanel from './components/AlertPanel'
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/education" element={<Education />} />
           <Route path="/hotspots" element={<Hotspots />} />
           <Route path="/reports" element={<Reports />} />
+          <Route path="/knowledge" element={<Knowledge />} />
         </Routes>
       </main>
       <AlertPanel />

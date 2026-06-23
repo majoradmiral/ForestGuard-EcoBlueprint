@@ -1,10 +1,12 @@
 import { useState, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import { MapContainer, TileLayer, Polygon, Tooltip as LeafletTooltip } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-import { BookOpen, Map, Globe, TreePine, ChevronDown, ChevronUp } from 'lucide-react'
+import { BookOpen, Map, Globe, TreePine, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react'
 import regions from '../data/regions'
 import species from '../data/kenyaSpecies'
 import { habitats } from '../data/kenyaSpecies'
+import flrResources, { speciesFlrMap } from '../data/kefriFlr'
 
 const regionPolygons = {
   mau: [[-0.2,35.0],[-0.2,35.6],[-0.8,35.6],[-0.8,35.0]],
@@ -252,6 +254,31 @@ export default function Education() {
                   <div style={{ fontSize: 12, color: 'var(--gray-400)', marginTop: 4 }}>
                     <strong style={{ color: 'var(--gray-200)' }}>Regions:</strong> {s.regions.map(rid => regions.find(r => r.id === rid)?.name).filter(Boolean).join(', ')}
                   </div>
+
+                  {speciesFlrMap[s.id] && speciesFlrMap[s.id].length > 0 && (
+                    <div style={{ marginTop: 8 }}>
+                      <div style={{ fontSize: 11, color: 'var(--gray-400)', marginBottom: 4 }}>
+                        <ExternalLink size={12} style={{ marginRight: 4, verticalAlign: 'middle' }} />
+                        <strong style={{ color: 'var(--gray-200)' }}>KEFRI FLR Resources:</strong>
+                      </div>
+                      {speciesFlrMap[s.id].map(uuid => {
+                        const res = flrResources.find(r => r.uuid === uuid)
+                        if (!res) return null
+                        return (
+                          <a key={uuid} href={res.kefri_url} target="_blank" rel="noopener noreferrer"
+                            style={{
+                              display: 'block', padding: '6px 10px', marginBottom: 3, borderRadius: 6,
+                              background: 'var(--gray-800)', fontSize: 11, color: 'var(--green-300)',
+                              border: '1px solid var(--gray-700)', transition: 'border-color 0.2s',
+                            }}
+                            onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--green-600)'}
+                            onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--gray-700)'}>
+                            {res.title}
+                          </a>
+                        )
+                      })}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -277,8 +304,12 @@ export default function Education() {
           </div>
           <div style={{ background: 'rgba(255,255,255,0.05)', borderRadius: 8, padding: 14 }}>
             <div style={{ fontSize: 24, marginBottom: 6 }}>📡</div>
-            <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--green-200)', marginBottom: 4 }}>KEFRI Data Contribution</h3>
-            <p style={{ fontSize: 12, color: 'var(--gray-400)' }}>Submit field observations via the KEFRI webhook API endpoint</p>
+            <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--green-200)', marginBottom: 4 }}>
+              <Link to="/knowledge" style={{ color: 'inherit' }}>KEFRI FLR Knowledge Base</Link>
+            </h3>
+            <p style={{ fontSize: 12, color: 'var(--gray-400)' }}>
+              Browse <Link to="/knowledge" style={{ color: 'var(--green-300)' }}>{flrResources.length} resources</Link> from KEFRI's FLR platform
+            </p>
           </div>
           <div style={{ background: 'rgba(255,255,255,0.05)', borderRadius: 8, padding: 14 }}>
             <div style={{ fontSize: 24, marginBottom: 6 }}>🔥</div>

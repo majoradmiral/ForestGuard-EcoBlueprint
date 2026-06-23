@@ -1,10 +1,11 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Trees, Map, BookOpen, Flame, BarChart3 } from 'lucide-react'
+import { Trees, Map, BookOpen, Flame, BarChart3, Library } from 'lucide-react'
 
 const links = [
   { to: '/', label: 'Dashboard', icon: Trees },
   { to: '/map', label: 'Ecology Map', icon: Map },
   { to: '/education', label: 'Education', icon: BookOpen },
+  { to: '/knowledge', label: 'Knowledge', icon: Library },
   { to: '/hotspots', label: 'Hotspots', icon: Flame },
   { to: '/reports', label: 'Reports', icon: BarChart3 },
 ]
