@@ -56,7 +56,7 @@ jobs:
         env:
           PGPASSWORD: forestguard
 
-      - name: Debug: pytest collection
+      - name: "Debug: pytest collection"
         working-directory: ./backend
         run: pytest --collect-only -q
 
