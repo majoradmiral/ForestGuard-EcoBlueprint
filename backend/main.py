@@ -77,6 +77,45 @@ HOTSPOTS = [
 KEFRI_WEBHOOK_SECRET = os.getenv("KEFRI_WEBHOOK_SECRET", "forestguard-dev-secret")
 kefri_data_store = []
 
+# ---------------------------------------------------------------------------
+# KEFRI FLR Knowledge Base
+# ---------------------------------------------------------------------------
+from kefri_flr import FLR_RESOURCES, RESOURCE_CATEGORIES, RESOURCE_TYPES, SPECIES_FLR
+
+@app.get("/api/flr/categories")
+def flr_categories():
+    return RESOURCE_CATEGORIES
+
+@app.get("/api/flr/types")
+def flr_types():
+    return RESOURCE_TYPES
+
+@app.get("/api/flr/resources")
+def flr_resources(category: str = None, type_id: str = None, species_id: str = None):
+    results = FLR_RESOURCES
+    if category:
+        results = [r for r in results if r["category"] == category]
+    if type_id:
+        results = [r for r in results if r["type"] == type_id]
+    if species_id:
+        uuids = set(SPECIES_FLR.get(species_id, []))
+        results = [r for r in results if r["uuid"] in uuids]
+    return results
+
+@app.get("/api/flr/resources/{uuid}")
+def flr_resource_detail(uuid: str):
+    for r in FLR_RESOURCES:
+        if r["uuid"] == uuid:
+            return r
+    raise HTTPException(404, "FLR resource not found")
+
+@app.get("/api/flr/species/{species_id}")
+def flr_for_species(species_id: str):
+    if species_id not in SPECIES_FLR:
+        return []
+    uuids = SPECIES_FLR[species_id]
+    return [r for r in FLR_RESOURCES if r["uuid"] in uuids]
+
 @app.get("/")
 def root():
     return {"app": "ForestGuard EcoBlueprint API", "version": "2.0.0", "status": "operational"}
